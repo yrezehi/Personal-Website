@@ -8,7 +8,7 @@
     <script src="./js/tailwind.js"></script>
 </head>
 <!-- cursor-none -->
-<body class="bg-[#300924] font-mono h-screen">
+<body class="bg-[#300924] p-1 font-mono h-screen">
     <div>
         <div class="text-[#89a764]">
             <p class="text-white">Yrezehi Shell</p>
@@ -22,12 +22,14 @@
                 <span class="text-[#5a73b3]">/index</span>
                 <span class="text-white">$</span>
 
-                <span contenteditable="true" class="min-w-fit w-2 ml-1 caret-transparent align-middle color-transparent text-white b-0 outline-0"> </span>
+                <span id="terminal-cursor" spellcheck="false" contenteditable="true" class="min-w-fit w-2 ml-1 caret-transparent align-middle color-transparent text-white outline-0"></span>
                 <span class="animate-pulse bg-white w-2 h-4 mt-1"></span>
             </p>
-            
         </div>
     </div>
+
     <script src="./js/tailwind.config.js"></script>
+    <script src="./js/index.js"></script>
+
 </body>
 </html>
