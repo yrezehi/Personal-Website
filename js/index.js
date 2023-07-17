@@ -30,8 +30,7 @@ function paddedText(text, value){
 function attachTerminalCaret () {
     document.getElementById(TERMINAL_CARET).onkeydown = function (event) {
         if (event.key === 'Enter'){
-            //parseCommand(document.getElementById(TERMINAL_CARET).textContent);
-            buildNewCommandPrefix();
+            parseCommand(document.getElementById(TERMINAL_CARET).textContent);
             event.preventDefault();
         }
     }
@@ -97,8 +96,19 @@ function moveCaretToNewLine(){
 
 function parseCommand(command){
     if(commands.hasOwnProperty(command)){
-        moveCaretToNewLine();
+        
+    } else {
+        commandNotFound(command);
     }
+
+    buildNewCommandPrefix();
 }
 
+function commandNotFound(command){
+    var contentElement = document.createElement("p");
+    contentElement.textContent = `bash: ${command}: command not found`;
+    terminalWindow.appendChild(contentElement);
+}
+
+// initial command
 buildNewCommandPrefix();
