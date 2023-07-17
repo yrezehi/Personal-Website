@@ -27,10 +27,13 @@ function paddedText(text, value){
     return text.padEnd(value);
 }
 
-document.getElementById(TERMINAL_CARET).onkeydown = function (event) {
-    if (event.key === 'Enter'){
-        parseCommand(document.getElementById(TERMINAL_CARET).textContent);
-        event.preventDefault();
+function attachTerminalCaret () {
+    document.getElementById(TERMINAL_CARET).onkeydown = function (event) {
+        if (event.key === 'Enter'){
+            //parseCommand(document.getElementById(TERMINAL_CARET).textContent);
+            buildNewCommandPrefix();
+            event.preventDefault();
+        }
     }
 }
 
@@ -38,40 +41,58 @@ document.body.onclick = function (event) {
     document.getElementById(TERMINAL_CARET).focus();
 }
 
-function buildCommandPrefix(){
+function buildNewCommandPrefix(){
     moveCaretToNewLine();
+
+    const wrapperElement = document.createElement("div");
+    wrapperElement.classList.add("flex");
 
     const userElement = document.createElement("span");
     userElement.classList.add(`text-[${USER_COLOR}]`);
     userElement.textContent = "Visitor@YREZEHI:";
-    terminalWindow.appendChild(userElement);
+    wrapperElement.appendChild(userElement);
 
     const directoryElement = document.createElement("span");
     directoryElement.classList.add(`text-[${DIRECTORY_COLOR}]`);
     directoryElement.textContent = "/";
-    terminalWindow.appendChild(directoryElement);
+    wrapperElement.appendChild(directoryElement);
 
     const suffixElement = document.createElement("span");
     suffixElement.textContent = "$";
     suffixElement.classList.add("text-white");
-    terminalWindow.appendChild(suffixElement);
+    wrapperElement.appendChild(suffixElement);
 
     const caretElement = document.createElement("span");
     caretElement.id = TERMINAL_CARET;
     caretElement.spellcheck = false;
     caretElement.contentEditable = true;
     caretElement.classList.add("min-w-fit", "w-2", "caret-transparent", "align-middle", "color-transparent", "text-white", "outline-0");
-    terminalWindow.appendChild(caretElement);
+    wrapperElement.appendChild(caretElement);
 
     const cursorElement = document.createElement("span");
     cursorElement.id = TERMINAL_CURSOR;
     cursorElement.classList.add("animate-pulse", "bg-white", "w-2", "h-4", "mt-1");
-    terminalWindow.appendChild(cursorElement);
+    wrapperElement.appendChild(cursorElement);
+
+    terminalWindow.appendChild(wrapperElement);
+
+    document.getElementById(TERMINAL_CARET).focus();
+    attachTerminalCaret();
 }
 
 function moveCaretToNewLine(){
-    document.getElementById(TERMINAL_CARET).contentEditable = false;
-    document.getElementById(TERMINAL_CURSOR).remove();
+    var currentCaret = document.getElementById(TERMINAL_CARET);
+
+    // ditching current caret
+    if(currentCaret){
+        currentCaret.contentEditable = false;
+        currentCaret.id = "";
+    }
+
+    var currentCursor = document.getElementById(TERMINAL_CURSOR);
+
+    if(currentCursor)
+        currentCursor.remove();
 }
 
 function parseCommand(command){
@@ -80,4 +101,4 @@ function parseCommand(command){
     }
 }
 
-buildCommandPrefix();
+buildNewCommandPrefix();
