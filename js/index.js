@@ -12,15 +12,14 @@ var terminalWindow = document.getElementById("terminal-window");
 const commands = {
     "help": {
         "action": "print",
-        "output": `
-            Usage: help [OPTION]...
-            Display information about builtin commands.
+        "output": 
+        `Usage: help [OPTION]...
+    Display information about builtin commands.
 
-            Options:
-            ${paddedText("ls")}
-            ${paddedText("cd")}
-            ${paddedText("wget")}
-        `
+    Options:
+      ${paddedText("ls", 10)} lists available context according to current context
+      ${paddedText("cd", 10)} navigate back and forth to available context
+      ${paddedText("wget", 10)} retreives content acording to current context`
     }
 };
 
@@ -101,7 +100,7 @@ function parseCommand(command){
         
         switch(instruction.action){
             case "print":
-                
+                printCommand(instruction.output);
                 break;
         }
     } else {
@@ -112,8 +111,12 @@ function parseCommand(command){
 }
 
 function commandNotFound(command){
-    var contentElement = document.createElement("p");
-    contentElement.textContent = `bash: ${command}: command not found`;
+    printCommand(`bash: ${command}: command not found`);
+}
+
+function printCommand(content){
+    var contentElement = document.createElement("pre");
+    contentElement.innerHTML = content;
     terminalWindow.appendChild(contentElement);
 }
 
