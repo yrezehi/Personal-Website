@@ -9,6 +9,8 @@ const TERMINAL_CARET = "terminal-caret";
 
 var terminalWindow = document.getElementById("terminal-window");
 
+const contexts = ["blog", "resume", "aboutme"];
+
 const commands = {
     "help": {
         "action": "print",
@@ -21,6 +23,11 @@ const commands = {
       ${paddedText("cd", 10)} navigate back and forth to available context
       ${paddedText("wget", 10)} retreives content acording to current context`
     },
+    "ls": {
+        "action": "print",
+        "output":
+        `${contexts.map(context => paddedText(context, 10)).join("")}`
+    }
 };
 
 function paddedText(text, value){
