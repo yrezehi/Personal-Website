@@ -11,6 +11,7 @@ var terminalWindow = document.getElementById("terminal-window");
 
 const commands = {
     "help": {
+        "action": "print",
         "output": `
             Usage: help [OPTION]...
             Display information about builtin commands.
@@ -65,7 +66,7 @@ function buildNewCommandPrefix(){
     caretElement.id = TERMINAL_CARET;
     caretElement.spellcheck = false;
     caretElement.contentEditable = true;
-    caretElement.classList.add("min-w-fit", "w-2", "caret-transparent", "align-middle", "color-transparent", "text-white", "outline-0");
+    caretElement.classList.add("overflow-hidden", "text-clip", "min-w-fit", "w-2", "caret-transparent", "align-middle", "color-transparent", "text-white", "outline-0");
     wrapperElement.appendChild(caretElement);
 
     const cursorElement = document.createElement("span");
@@ -96,7 +97,13 @@ function moveCaretToNewLine(){
 
 function parseCommand(command){
     if(commands.hasOwnProperty(command)){
+        const instruction = commands[command];
         
+        switch(instruction.action){
+            case "print":
+                
+                break;
+        }
     } else {
         commandNotFound(command);
     }
