@@ -20,7 +20,7 @@ const commands = {
       ${paddedText("ls", 10)} lists available context according to current context
       ${paddedText("cd", 10)} navigate back and forth to available context
       ${paddedText("wget", 10)} retreives content acording to current context`
-    }
+    },
 };
 
 function paddedText(text, value){
@@ -81,15 +81,12 @@ function buildNewCommandPrefix(){
 
 function moveCaretToNewLine(){
     var currentCaret = document.getElementById(TERMINAL_CARET);
-
     // ditching current caret
     if(currentCaret){
         currentCaret.contentEditable = false;
         currentCaret.id = "";
     }
-
     var currentCursor = document.getElementById(TERMINAL_CURSOR);
-
     if(currentCursor)
         currentCursor.remove();
 }
@@ -97,13 +94,12 @@ function moveCaretToNewLine(){
 function parseCommand(command){
     if(commands.hasOwnProperty(command)){
         const instruction = commands[command];
-        
         switch(instruction.action){
             case "print":
                 printCommand(instruction.output);
                 break;
         }
-    } else {
+    } else if(command){
         commandNotFound(command);
     }
 
