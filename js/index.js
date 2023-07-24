@@ -52,7 +52,7 @@ const commands = {
         },
         "output": 
         `blog: missing operand
-        Try 'blog --help' for more information
+    Try 'blog --help' for more information
         `
     }
 };
@@ -126,6 +126,16 @@ function moveCaretToNewLine(){
 }
 
 function parseCommand(command){
+    
+    if(isMultiCommand(command))
+        handleMultiCommand(command);
+    else 
+        handleCommand(command);
+
+    buildNewCommandPrefix();
+}
+
+function handleCommand(command){
     if(commands.hasOwnProperty(command)){
         const instruction = commands[command];
         switch(instruction.action){
@@ -136,8 +146,19 @@ function parseCommand(command){
     } else if(command){
         commandNotFound(command);
     }
+}
 
-    buildNewCommandPrefix();
+function handleMultiCommand(command){
+    command.split(/\s+/);
+
+}
+
+function parseOptions(command){
+
+}
+
+function isMultiCommand(command){
+    return command.trim().match(/([\s]+)/g).length > 1;
 }
 
 function commandNotFound(command){
