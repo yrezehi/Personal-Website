@@ -149,8 +149,25 @@ function handleCommand(command){
 }
 
 function handleMultiCommand(command){
-    command.split(/\s+/);
+    const parsedCommands = command.split(/\s+/);
+    const mainCommand = parsedCommands[0];
 
+    if(commands.hasOwnProperty(mainCommand)){
+        const instruction = commands[mainCommand];
+
+        if(!instruction.hasOwnProperty("options")){ return; }
+
+        const targetOptions = instruction.options[parsedCommands[1]];
+
+        if(targetOptions){
+
+        } else {
+            optionNotFound(mainCommand, targetOptions);
+        }
+
+    } else if(command){
+        commandNotFound(command);
+    }
 }
 
 function parseOptions(command){
@@ -159,6 +176,10 @@ function parseOptions(command){
 
 function isMultiCommand(command){
     return command.trim().match(/([\s]+)/g).length > 1;
+}
+
+function optionNotFound(command, option){
+    printCommand(`${command}: unknown option ${option}`);
 }
 
 function commandNotFound(command){
