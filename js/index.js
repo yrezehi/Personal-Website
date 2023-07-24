@@ -39,8 +39,21 @@ const commands = {
     },
     "blog": {
         "action": "print",
-        "output":
-        `${blogs.map(blog => paddedText(`'${blog}'`, 10)).join(" ")}`
+        "options": {
+            "--list": `${blogs.map(blog => paddedText(`'${blog}'`, 10)).join(" ")}`,
+            "--help": 
+            `Usage: blog [OPTION]... [TITLE]...
+
+            Explore personal blog posts, learn something.
+
+                ${paddedText("--list")} lists available blog posts
+                ${paddedText("--read")} read specific blog post
+            `
+        },
+        "output": 
+        `blog: missing operand
+        Try 'blog --help' for more information
+        `
     }
 };
 
