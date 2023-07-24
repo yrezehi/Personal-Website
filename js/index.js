@@ -10,6 +10,7 @@ const TERMINAL_CARET = "terminal-caret";
 var terminalWindow = document.getElementById("terminal-window");
 
 const contexts = ["blog", "resume", "aboutme"];
+const blogs = ["Caching nodejs evernight", "Progress bar files upload using streams"];
 
 const commands = {
     "help": {
@@ -27,6 +28,19 @@ const commands = {
         "action": "print",
         "output":
         `${contexts.map(context => paddedText(context, 10)).join("")}`
+    },
+    "aboutme": {
+        "action": "print",
+        "output": 
+        `Hi there!, My name is Yasser and brief introduction about myself. 
+        
+        I'm just a simple coder who codes for fun in his free time, all what I do is eat, play and code
+        `
+    },
+    "blog": {
+        "action": "print",
+        "output":
+        `${blogs.map(blog => paddedText(`'${blog}'`, 10)).join(" ")}`
     }
 };
 
