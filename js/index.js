@@ -77,6 +77,19 @@ document.body.onclick = function (event) {
     document.getElementById(TERMINAL_CARET).focus();
 }
 
+document.body.addEventListener("keydown", function(event) {
+    event ??= window.event;
+
+    var keyPress = event.which || event.keyCode;
+    var ctrlPress = event.ctrlKey ?? key === 17;
+
+    console.log(ctrlPress, keyPress);
+
+    if(keyPress === 67 && ctrlPress)
+        buildNewCommandPrefix();
+
+}, false);
+
 function buildNewCommandPrefix(){
     moveCaretToNewLine();
 
