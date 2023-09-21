@@ -37,6 +37,9 @@ const commands = {
         I'm just a simple coder who codes for fun in his free time, all what I do is eat, play and code
         `
     },
+    "clear": {
+        "action": "clear",
+    },
     "blog": {
         "action": "print",
         "options": {
@@ -142,6 +145,9 @@ function handleCommand(command){
             case "print":
                 printCommand(instruction.output);
                 break;
+            case "clear":
+                clearCommands();
+                break;
         }
     } else if(command){
         commandNotFound(command);
@@ -175,7 +181,9 @@ function parseOptions(command){
 }
 
 function isMultiCommand(command){
-    return command.trim().match(/([\s]+)/g).length > 1;
+    var spacingRegex = /([\s]+)/g;
+
+    return spacingRegex.test(command) && command.trim().match(spacingRegex).length > 1;
 }
 
 function optionNotFound(command, option){
@@ -190,6 +198,10 @@ function printCommand(content){
     var contentElement = document.createElement("pre");
     contentElement.innerHTML = content;
     terminalWindow.appendChild(contentElement);
+}
+
+function clearCommands(){
+    terminalWindow.innerHTML = "";
 }
 
 // initial command
