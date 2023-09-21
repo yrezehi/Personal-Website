@@ -12,6 +12,8 @@ var terminalWindow = document.getElementById("terminal-window");
 const contexts = ["blog", "resume", "aboutme"];
 const blogs = ["Caching nodejs evernight", "Progress bar files upload using streams"];
 
+var relativePath = "";
+
 const commands = {
     "help": {
         "action": "print",
@@ -29,6 +31,13 @@ const commands = {
         "output":
         `${contexts.map(context => paddedText(context, 10)).join("")}`
     },
+    "clear": {
+        "action": "clear",
+    },
+    "cd": {
+        "action": "navigatie",
+        "requires_multi": true
+    },
     "aboutme": {
         "action": "print",
         "output": 
@@ -36,9 +45,6 @@ const commands = {
         
         I'm just a simple coder who codes for fun in his free time, all what I do is eat, play and code
         `
-    },
-    "clear": {
-        "action": "clear",
     },
     "blog": {
         "action": "print",
@@ -83,8 +89,6 @@ document.body.addEventListener("keydown", function(event) {
     var keyPress = event.which || event.keyCode;
     var ctrlPress = event.ctrlKey ?? key === 17;
 
-    console.log(ctrlPress, keyPress);
-
     if(keyPress === 67 && ctrlPress)
         buildNewCommandPrefix();
 
@@ -103,7 +107,7 @@ function buildNewCommandPrefix(){
 
     const directoryElement = document.createElement("span");
     directoryElement.classList.add(`text-[${DIRECTORY_COLOR}]`);
-    directoryElement.textContent = "/";
+    directoryElement.textContent = relativePath;
     wrapperElement.appendChild(directoryElement);
 
     const suffixElement = document.createElement("span");
@@ -161,10 +165,17 @@ function handleCommand(command){
             case "clear":
                 clearCommands();
                 break;
+            case "navigatie":
+                navigateToRoot();
+                break;
         }
     } else if(command){
         commandNotFound(command);
     }
+}
+
+function navigateToRoot(){
+    relativePath = "";
 }
 
 function handleMultiCommand(command){
@@ -177,9 +188,9 @@ function handleMultiCommand(command){
         if(!instruction.hasOwnProperty("options")){ return; }
 
         const targetOptions = instruction.options[parsedCommands[1]];
-
+        console.log(targetOptions);
         if(targetOptions){
-
+            
         } else {
             optionNotFound(mainCommand, targetOptions);
         }
