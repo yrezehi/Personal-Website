@@ -36,6 +36,19 @@ const commands = {
     },
     "cd": {
         "action": "navigatie",
+        "options": {
+            "blog": {
+                "action": "print",
+                "output": 
+                `${blogs.map(blog => paddedText(blog, 10)).join("")}`
+            },
+            "resume": {
+
+            },
+            "aboutme": {
+
+            }
+        },
         "requires_multi": true
     },
     "aboutme": {
@@ -146,7 +159,7 @@ function moveCaretToNewLine(){
 }
 
 function parseCommand(command){
-    
+
     if(isMultiCommand(command))
         handleMultiCommand(command);
     else 
@@ -186,9 +199,9 @@ function handleMultiCommand(command){
         const instruction = commands[mainCommand];
 
         if(!instruction.hasOwnProperty("options")){ return; }
-
+        
         const targetOptions = instruction.options[parsedCommands[1]];
-        console.log(targetOptions);
+
         if(targetOptions){
             
         } else {
@@ -207,7 +220,7 @@ function parseOptions(command){
 function isMultiCommand(command){
     var spacingRegex = /([\s]+)/g;
 
-    return spacingRegex.test(command) && command.trim().match(spacingRegex).length > 1;
+    return spacingRegex.test(command) && command.trim().match(spacingRegex).length > 0;
 }
 
 function optionNotFound(command, option){
