@@ -1,4 +1,3 @@
-
 (function () {
 
     const commandPrefix = "Visitor@YREZEHI:";
@@ -238,5 +237,4 @@
 
     // initial command
     buildNewCommandPrefix();
-
 })();
