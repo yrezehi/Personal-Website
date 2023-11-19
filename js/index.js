@@ -10,14 +10,7 @@
 
     var terminalWindow = document.getElementById("terminal-window");
 
-    const contexts = ["blog posts", "resume", "aboutme"];
-
-    const blogs = [
-        {
-            "title": "Backup MongoDB every night in NodeJS",
-            "url": "/blogs/backup_mongodb.md"
-        }
-    ];
+    const contexts = ["blog", "resume", "aboutme"];
 
     var relativePath = "";
 
@@ -56,7 +49,7 @@
         "blog": {
             "action": "print",
             "options": {
-                "--list": `${blogs.map(blog => paddedText(`'${blog}'`, 10)).join(" ")}`,
+                "--list": `${blog.articles.map(article => paddedText(`'${article}'`, 10)).join(" ")}`,
                 "--help":
                     `Usage: blog [OPTION]... [TITLE]...
 
@@ -153,12 +146,10 @@
     }
 
     function parseCommand(command) {
-
         if (isMultiCommand(command))
             handleMultiCommand(command);
         else
             handleCommand(command);
-
         buildNewCommandPrefix();
     }
 
@@ -195,7 +186,7 @@
             if (!instruction.hasOwnProperty("options")) { return; }
 
             const targetOptions = instruction.options[parsedCommands[1]];
-            console.log(targetOptions);
+
             if (targetOptions) {
 
             } else {
@@ -207,14 +198,11 @@
         }
     }
 
-    function parseOptions(command) {
-
-    }
-
     function isMultiCommand(command) {
         var spacingRegex = /([\s]+)/g;
+        var wordsRegex = /\w+/g;
 
-        return spacingRegex.test(command) && command.trim().match(spacingRegex).length > 1;
+        return spacingRegex.test(command) && command.trim().match(wordsRegex).length > 1;
     }
 
     function optionNotFound(command, option) {
