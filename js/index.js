@@ -14,6 +14,9 @@
 
     var relativePath = "";
 
+    var commandsHistory = [];
+    var currentHistoryIndex = 0;
+
     const commands = {
         "help": {
             "action": "print",
@@ -73,7 +76,13 @@
     function attachTerminalCaret() {
         document.getElementById(TERMINAL_CARET).onkeydown = function (event) {
             if (event.key === 'Enter') {
-                parseCommand(document.getElementById(TERMINAL_CARET).textContent);
+                var contextContent = document.getElementById(TERMINAL_CARET).textContent; 
+                
+                commandsHistory.push(contextContent);
+                currentHistoryIndex = 0;
+
+                parseCommand(contextContent);
+                
                 event.preventDefault();
             }
         }
@@ -92,7 +101,23 @@
         if (keyPress === 67 && ctrlPress)
             buildNewCommandPrefix();
 
+        if(keyPress === 38){
+            handleRevertToHistory();
+        }
+
     }, false);
+
+    function handleBackwordToHistory() {
+        if(currentHistoryIndex < commandsHistory.length){
+            document.getElementById(TERMINAL_CARET).textContent = commandsHistory[currentHistoryIndex++];
+        }
+    }
+
+    function handleBackwordToHistory() {
+        if(currentHistoryIndex > 0){
+            document.getElementById(TERMINAL_CARET).textContent = commandsHistory[currentHistoryIndex--];
+        }
+    }
 
     function buildNewCommandPrefix() {
         moveCaretToNewLine();
