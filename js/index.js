@@ -78,9 +78,10 @@
             if (event.key === 'Enter') {
                 var contextContent = document.getElementById(TERMINAL_CARET).textContent; 
                 
-                commandsHistory.push(contextContent);
-                currentHistoryIndex = 0;
-
+                if(contextContent){
+                    commandsHistory.push(contextContent);
+                    currentHistoryIndex = commandsHistory.length - 1;
+                }
                 parseCommand(contextContent);
                 
                 event.preventDefault();
@@ -102,20 +103,30 @@
             buildNewCommandPrefix();
 
         if(keyPress === 38){
-            handleRevertToHistory();
+            handleBackwardToHistory();
+        }
+
+        if(keyPress === 40){
+            handleForwardToHistory();
         }
 
     }, false);
 
-    function handleBackwordToHistory() {
-        if(currentHistoryIndex < commandsHistory.length){
-            document.getElementById(TERMINAL_CARET).textContent = commandsHistory[currentHistoryIndex++];
+    function handleBackwardToHistory() {
+        if(currentHistoryIndex <= commandsHistory.length){
+            document.getElementById(TERMINAL_CARET).textContent = commandsHistory[currentHistoryIndex];
+            currentHistoryIndex = Math.max(0, --currentHistoryIndex);
+        } else {
+            document.getElementById(TERMINAL_CARET).textContent = commandsHistory[currentHistoryIndex];
         }
     }
 
-    function handleBackwordToHistory() {
-        if(currentHistoryIndex > 0){
-            document.getElementById(TERMINAL_CARET).textContent = commandsHistory[currentHistoryIndex--];
+    function handleForwardToHistory() {
+        if(currentHistoryIndex >= 0){
+            document.getElementById(TERMINAL_CARET).textContent = commandsHistory[currentHistoryIndex];
+            currentHistoryIndex = Math.min(commandsHistory.length, ++currentHistoryIndex);
+        } else {
+            document.getElementById(TERMINAL_CARET).textContent = commandsHistory[currentHistoryIndex];
         }
     }
 
