@@ -37,6 +37,10 @@
         "clear": {
             "action": "clear",
         },
+        "pwd": {
+            "action": "print",
+            "output": relativePath,
+        },
         "cd": {
             "action": "navigatie",
             "requires_multi": true
