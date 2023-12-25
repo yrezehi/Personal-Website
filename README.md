@@ -2,9 +2,10 @@
 
 ## TODO
 
-- [ ] Simulate wget (same origin restricted mode)
+- [ ] Simulate wget, curl
 - [x] History navigation
 - [x] MD renderer for blog posts
 - [ ] Mini cli game
 - [ ] Switch non-tech mode
 - [ ] Random 20 commands
+- [ ] 
